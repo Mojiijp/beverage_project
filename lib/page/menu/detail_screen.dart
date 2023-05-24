@@ -8,10 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// List<String> toppingSelect = [];
-// List<String> sizecupSelect = [];
-// List<String> sweetnessSelect = [];
-// int amontIncart = 1;
+List<String> toppingSelect = [];
+List<String> sizeCupSelect = [];
+List<String> sweetnessSelect = [];
+
+
+int countSize = 0;
+int countTopping = 0;
+int amountInCart = 1;
+
 class DetailScreen extends StatefulWidget {
 
   const DetailScreen({super.key});
@@ -30,6 +35,8 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+
+
 
   List topping_list = [];
 
@@ -134,7 +141,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: <Widget>[
                       Container(
                         width: 400,
-                        height: 250,
+                        height: 320,
                         color: Colors.white,
                         child: Column(
                           children: [
@@ -146,6 +153,31 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                             Text(
                               Get.arguments["name"],
+                              style: GoogleFonts.kanit(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff1C6B00)
+                              ),
+                            ),
+                            Text(
+                              "${Get.arguments["price"]} บาท",
+                              //"$countSize บาท",
+                              style: GoogleFonts.kanit(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff1C6B00)
+                              ),
+                            ),
+                            Text(
+                              "$countSize บาท * จำนวน $amountInCart แก้ว",
+                              style: GoogleFonts.kanit(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff1C6B00)
+                              ),
+                            ),
+                            Text(
+                              "รวมราคาเครื่องดื่ม ${countSize * amountInCart} บาท",
                               style: GoogleFonts.kanit(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -191,9 +223,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                 //width: 300,
                                 child: GridView.builder(
                                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
+                                    crossAxisCount: 2,
                                     childAspectRatio: 5/1.5,
-                                    mainAxisSpacing: 10,
+                                    //mainAxisSpacing: 10,
                                     //crossAxisSpacing: 1
                                   ),
                                   itemCount: topping_list.length,
@@ -203,17 +235,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     return filterChipWidget(chipName: "${topping.name} + ${topping.price}");
                                   }
                                 ),
-                              )
-                              // filterChipWidget(chipName: "ไข่มุก 0฿"),
-                              // filterChipWidget(chipName: "วุ้นลิ้นจี่ 5฿"),
-                              // filterChipWidget(chipName: "วุ้นสตรอว์เบอร์รี่ 5฿"),
-                              // filterChipWidget(chipName: "วุ้นแอปเปิ้ล 5฿"),
-                              // filterChipWidget(chipName: "พุดดิ้ง 5฿"),
-                              // filterChipWidget(chipName: "เฉาก๊วย 5฿"),
-                              // filterChipWidget(chipName: "น้ำผึ้ง 5฿"),
-                              // filterChipWidget(chipName: "บราวน์ชูก้าซอส 5฿"),
-                              // filterChipWidget(chipName: "เจลลี่บราวน์ชูก้า 10฿"),
-                              // filterChipWidget(chipName: "อโรเวล่า 15฿"),
+                              ),
                             ],
           
                           ),
@@ -256,9 +278,17 @@ class _DetailScreenState extends State<DetailScreen> {
                               Get.to(() => BasketScreen(),
                                   arguments: {
                                     "image" : Get.arguments["image"],
-                                    "name" : Get.arguments["name"]
+                                    "name" : Get.arguments["name"],
+                                    "price" : Get.arguments["price"],
+                                    "priceCal" : countSize * amountInCart,
+                                    "amount" : amountInCart,
+                                    "sizeCup" : sizeCupSelect.last,
+                                    "sweet" : sweetnessSelect.last
                                   }
                               );
+                              print("Size cup : ${sizeCupSelect.last}");
+                              print("Sweetness level : ${sweetnessSelect.last}");
+                              print(countSize * amountInCart);
                             },
                             color: Color.fromRGBO(84, 180, 53, 10),
                             child: const Padding(
@@ -294,6 +324,7 @@ Widget _titleContainer(String myTitle) {
   );
 }
 
+///Topping
 class filterChipWidget extends StatefulWidget {
   final String chipName;
   const filterChipWidget({Key? key, required this.chipName}) : super(key: key);
@@ -318,6 +349,7 @@ class _filterChipWidgetState extends State<filterChipWidget> {
       ),
       backgroundColor: const Color(0xffffffff),
       onSelected: (isSelected) {
+
         // isSelected?
         // setState(() {
         //   toppingSelect.add(widget.chipName.split(" ")[0]);
@@ -336,6 +368,7 @@ class _filterChipWidgetState extends State<filterChipWidget> {
   }
 }
 
+///Size cup
 class choiceChipWidget extends StatefulWidget {
   final List<String> reportList;
   const choiceChipWidget(this.reportList, {Key? key}) : super(key: key);
@@ -364,6 +397,15 @@ class _choiceChipWidgetState extends State<choiceChipWidget> {
           selectedColor: const Color.fromRGBO(84, 180, 53, 10),
           selected: selectedChoice == item,
           onSelected: (isSelected) {
+            if(selectedChoice == "Size M") {
+              countSize = Get.arguments["price"];
+              sizeCupSelect.add(item);
+              print("click size M =  $countSize Bath");
+              print(sizeCupSelect.last);
+            }else if(selectedChoice == "Size L") {
+              countSize = Get.arguments["price"]+ 5;
+              print("click size L =  $countSize Bath");
+            }
             // isSelected?
             // setState(() {
             //   sizecupSelect.add(item);
@@ -389,6 +431,7 @@ class _choiceChipWidgetState extends State<choiceChipWidget> {
   }
 }
 
+///Sweetness level
 class choiceChipWidgetTwo extends StatefulWidget {
   final List<String> reportList;
   const choiceChipWidgetTwo(this.reportList, {Key? key}) : super(key: key);
@@ -417,16 +460,17 @@ class _choiceChipWidgetTwoState extends State<choiceChipWidgetTwo> {
           selectedColor: const Color.fromRGBO(84, 180, 53, 10),
           selected: selectedChoice == item,
           onSelected: (isSelected) {
-            // isSelected?
-            // setState(() {
-            //   sweetnessSelect.add(item);
-            // })
-            //     : setState(() {
-            //   sweetnessSelect.remove(item);
-            // });
+            isSelected?
+            setState(() {
+              sweetnessSelect.add(item);
+            })
+                : setState(() {
+              sweetnessSelect.remove(item);
+            });
             setState(() {
               selectedChoice = item;
             });
+            print(sweetnessSelect.last);
           },
         ),
       ));
@@ -442,6 +486,7 @@ class _choiceChipWidgetTwoState extends State<choiceChipWidgetTwo> {
   }
 }
 
+///Amount
 class CartCounter extends StatefulWidget {
   const CartCounter({Key? key}) : super(key: key);
 
@@ -464,9 +509,10 @@ class _CartCounterState extends State<CartCounter> {
                     setState(() {
                       numOfItems--;
                     });
-                    // setState(() {
-                    //   amontIncart--;
-                    // });
+                    setState(() {
+                      amountInCart--;
+                    });
+                    print("amount in cart : $amountInCart");
                   }
                 },
               ),
@@ -485,10 +531,11 @@ class _CartCounterState extends State<CartCounter> {
                       setState(() {
                         numOfItems++;
                       });
-                      // setState(() {
-                      //   amontIncart++;
-                      // });
+                      setState(() {
+                        amountInCart++;
+                      });
                     }
+                    print("amount in cart : $amountInCart");
                   }
               ),
             ])

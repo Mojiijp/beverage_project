@@ -4,6 +4,7 @@ import 'package:beverage_project/src/model/menu.dart';
 import 'package:beverage_project/src/services/menu_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ListMenu extends StatefulWidget {
   final int menu;
@@ -44,10 +45,15 @@ class _ListMenuState extends State<ListMenu> {
           print("path => ${menuTea.image_path}");
           return Card(
             child: ListTile(
-              title: Text("${menuTea.name}"),
+              title: Text(
+                  "${menuTea.name}",
+                style: GoogleFonts.kanit(
+                  fontSize: 18
+                ),
+              ),
               subtitle: Text(
                 "฿${menuTea.price}",
-                style: const TextStyle(
+                style: GoogleFonts.kanit(
                   fontSize: 20,
                   color: Color.fromARGB(255, 38, 106, 40),
                   fontWeight: FontWeight.bold,
@@ -60,12 +66,14 @@ class _ListMenuState extends State<ListMenu> {
                 Get.to(() => DetailScreen(),
                   arguments: {
                     "image" : 'http://192.168.1.4:8000/api/menu/image/${menuTea.id}',
-                    "name" : menuTea.name
+                    "name" : menuTea.name,
+                    "price" : menuTea.price
                   }
                 );
 
                 print(menuTea.id);
                 print(menuTea.name);
+                print("price is : ${menuTea.price}");
               },
             ),
           );

@@ -1,3 +1,5 @@
+import 'package:beverage_project/page/picktime_screen.dart';
+import 'package:beverage_project/src/config/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -66,565 +68,96 @@ class BasketScreen extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     width: 500,
-                    height: 200,
+                    height: 220,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.white
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Image(
-                          width: 100,
-                          height: 100,
-                          image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
+                            Image(
+                                width: 100,
+                                height: 100,
+                                image: NetworkImage(Get.arguments["image"])
                             ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
+                            Column(
+                              children: [
+                                Text(
+                                  Get.arguments["name"],
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 28,
+                                      color: Colors.black
+                                  ),
+                                ),
+                                // Text(
+                                //   "แก้วละ ${Get.arguments["price"]} บาท",
+                                //   style: GoogleFonts.kanit(
+                                //       fontSize: 16,
+                                //       color: Colors.green
+                                //   ),
+                                // ),
+                                Text(
+                                  "รวม ${Get.arguments["priceCal"]} บาท",
+                                  style: GoogleFonts.kanit(
+                                      fontSize: 28,
+                                      color: Colors.green
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
                                   color: Colors.green
                               ),
-                            ),
+                              child: Text(
+                                Get.arguments["amount"].toString(),
+                                style: GoogleFonts.mulish(
+                                    fontSize: 28,
+                                    color: Colors.black
+                                ),
+                              ),
+                            )
                           ],
                         ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "ขนาดแก้ว : ${Get.arguments["sizeCup"]}",
+                                style: GoogleFonts.kanit(
+                                    fontSize: 18,
+                                    color: Colors.black
+                                ),
+                              ),
+                              Text(
+                                "Topping : 000000000",
+                                style: GoogleFonts.kanit(
+                                    fontSize: 18,
+                                    color: Colors.black
+                                ),
+                              ),
+                              Text(
+                                "ระดับความหวาน : ${Get.arguments["sweet"]}",
+                                style: GoogleFonts.kanit(
+                                    fontSize: 18,
+                                    color: Colors.black
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       ],
                     ),
                   ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: 500,
-                    height: 200,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Image(
-                            width: 100,
-                            height: 100,
-                            image: NetworkImage(Get.arguments["image"])
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              Get.arguments["name"],
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.black
-                              ),
-                            ),
-                            Text(
-                              "0 บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 28,
-                                  color: Colors.green
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 30,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green
-                          ),
-                          child: Text(
-                            "1",
-                            style: GoogleFonts.mulish(
-                                fontSize: 28,
-                                color: Colors.black
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-
                 ],
               ),
             ),
@@ -679,7 +212,13 @@ class BasketScreen extends StatelessWidget {
                     width: 200,
                     height: 40,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        //Get.toNamed(Routes.pickTimeScreen);
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PickTimeScreen()));
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xff609966),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -706,7 +245,9 @@ class BasketScreen extends StatelessWidget {
                     width: 200,
                     height: 40,
                     child: ElevatedButton(
-                      onPressed:() {},
+                      onPressed:() {
+                        Get.toNamed(Routes.bottomNavBar);
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: Color(0xffa8cea8),

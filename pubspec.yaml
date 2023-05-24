@@ -47,6 +47,8 @@ dependencies:
 
   shared_preferences: ^2.1.0
 
+  file_picker: ^5.2.2
+
   #Api
   http: ^0.13.6
   dio: ^5.1.2

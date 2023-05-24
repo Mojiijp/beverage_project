@@ -1,6 +1,7 @@
 import 'package:beverage_project/page/basket_screen.dart';
 import 'package:beverage_project/page/menu/detail_screen.dart';
 import 'package:beverage_project/page/order_screen.dart';
+import 'package:beverage_project/page/picktime_screen.dart';
 import 'package:beverage_project/src/model/menu.dart';
 import 'package:beverage_project/src/widgets/buttom_nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class Routes {
   static const detailScreen = "/detail";
   static const orderScreen = "/order";
   static const basketScreen = "/basket";
+  static const pickTimeScreen = "/pick-time";
+
 
   static List<GetPage> getPageRoutes() {
     return [
@@ -48,6 +51,10 @@ class Routes {
       GetPage(
         name: basketScreen,
         page: () => const BasketScreen(),
+      ),
+      GetPage(
+        name: pickTimeScreen,
+        page: () => const PickTimeScreen(),
       ),
     ];
   }
