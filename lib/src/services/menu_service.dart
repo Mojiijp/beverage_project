@@ -63,7 +63,7 @@ class MenuService {
     };
 
     final response = await http.post(
-        Uri.parse('http://192.168.1.4:8000/api/menu/menu_list_type'),
+        Uri.parse('http://192.168.1.10:8000/api/menu/menu_list_type'),
         body: jsonEncode(body),
         headers: {
           'Content-Type': 'application/json',

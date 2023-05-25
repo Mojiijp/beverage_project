@@ -9,7 +9,7 @@ class ToppingService {
     final SharedPreferences prefs = await _prefs;
 
     final response = await http.post(
-        Uri.parse('http://192.168.1.4:8000/api/menu/topping_list'),
+        Uri.parse('http://192.168.1.10:8000/api/menu/topping_list'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ${prefs.getString("token")}',

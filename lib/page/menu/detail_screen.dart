@@ -12,10 +12,12 @@ List<String> toppingSelect = [];
 List<String> sizeCupSelect = [];
 List<String> sweetnessSelect = [];
 
+List topping_list = [];
 
 int countSize = 0;
 int countTopping = 0;
 int amountInCart = 1;
+
 
 class DetailScreen extends StatefulWidget {
 
@@ -36,9 +38,6 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
 
-
-
-  List topping_list = [];
 
   void dataStore() async
   {
@@ -169,7 +168,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             Text(
-                              "$countSize บาท * จำนวน $amountInCart แก้ว",
+                              "$countSize บาท + ราคาท็อปปิ้ง $countTopping บาท * จำนวน $amountInCart แก้ว",
                               style: GoogleFonts.kanit(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -177,7 +176,7 @@ class _DetailScreenState extends State<DetailScreen> {
                               ),
                             ),
                             Text(
-                              "รวมราคาเครื่องดื่ม ${countSize * amountInCart} บาท",
+                              "รวมราคาเครื่องดื่ม ${(countSize + countTopping) * amountInCart} บาท",
                               style: GoogleFonts.kanit(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -283,10 +282,12 @@ class _DetailScreenState extends State<DetailScreen> {
                                     "priceCal" : countSize * amountInCart,
                                     "amount" : amountInCart,
                                     "sizeCup" : sizeCupSelect.last,
+                                    "topping" : toppingSelect.join(","),
                                     "sweet" : sweetnessSelect.last
                                   }
                               );
                               print("Size cup : ${sizeCupSelect.last}");
+                              print("Topping : ${toppingSelect.join(",")}");
                               print("Sweetness level : ${sweetnessSelect.last}");
                               print(countSize * amountInCart);
                             },
@@ -349,18 +350,74 @@ class _filterChipWidgetState extends State<filterChipWidget> {
       ),
       backgroundColor: const Color(0xffffffff),
       onSelected: (isSelected) {
+        isSelected?
+        setState(() {
+          toppingSelect.add(widget.chipName.split(" ")[0]);
 
-        // isSelected?
-        // setState(() {
-        //   toppingSelect.add(widget.chipName.split(" ")[0]);
-        // })
-        // print("Selected: ${widget.chipName.split(" ")[0]}")
-        //     : setState(() {
-        //   toppingSelect.remove(widget.chipName.split(" ")[0]);
-        // });
+          if(widget.chipName == "ไข่มุก + 0"){
+            countTopping = countTopping + 0;
+          }else if(widget.chipName == "พุดดิ้ง + 5"){
+            countTopping = countTopping + 5;
+          }else if(widget.chipName == "เฉาก๊วย + 5"){
+            countTopping = countTopping + 5;
+          }else if(widget.chipName == "วุ้นลิ้นจี่ + 5"){
+            countTopping = countTopping + 5;
+          }else if(widget.chipName == "วุ้นแอปเปิ้ล + 5"){
+            countTopping = countTopping + 5;
+          }else if(widget.chipName == "วุ้นสตรอว์เบอร์รี่ + 5"){
+            countTopping = countTopping + 5;
+          }else if(widget.chipName == "บราวน์ชูการ์ + 5"){
+            countTopping = countTopping + 5;
+          }else if(widget.chipName == "น้ำผึ้ง + 5"){
+            countTopping = countTopping + 5;
+          }else if(widget.chipName == "บราวน์ชูการ์เจลลี่ + 10"){
+            countTopping = countTopping + 10;
+          }else if(widget.chipName == "ว่านหางจรเข้เชื่อม + 15"){
+            countTopping = countTopping + 15;
+          }else if(widget.chipName == "ครีมชีส + 15"){
+            countTopping = countTopping + 15;
+          }else if(widget.chipName == "วิปครีม + 15"){
+            countTopping = countTopping + 15;
+          }
+
+
+        })
+
+        : setState(() {
+
+          toppingSelect.remove(widget.chipName.split(" ")[0]);
+
+          if(widget.chipName == "ไข่มุก + 0"){
+            countTopping = 0;
+          }else if(widget.chipName == "พุดดิ้ง + 5"){
+            countTopping = countTopping - 5;
+          }else if(widget.chipName == "เฉาก๊วย + 5"){
+            countTopping = countTopping - 5;
+          }else if(widget.chipName == "วุ้นลิ้นจี่ + 5"){
+            countTopping = countTopping - 5;
+          }else if(widget.chipName == "วุ้นแอปเปิ้ล + 5"){
+            countTopping = countTopping - 5;
+          }else if(widget.chipName == "วุ้นสตรอว์เบอร์รี่ + 5"){
+            countTopping = countTopping - 5;
+          }else if(widget.chipName == "บราวน์ชูการ์ + 5"){
+            countTopping = countTopping - 5;
+          }else if(widget.chipName == "น้ำผึ้ง + 5"){
+            countTopping = countTopping - 5;
+          }else if(widget.chipName == "บราวน์ชูการ์เจลลี่ + 10"){
+            countTopping = countTopping - 10;
+          }else if(widget.chipName == "ว่านหางจรเข้เชื่อม + 15"){
+            countTopping = countTopping - 15;
+          }else if(widget.chipName == "ครีมชีส + 15"){
+            countTopping = countTopping - 15;
+          }else if(widget.chipName == "วิปครีม + 15"){
+            countTopping = countTopping - 15;
+          }
+        });
         setState(() {
           _isSelected = isSelected;
         });
+        print("Selected: $toppingSelect");
+        print("Topping price : $countTopping");
       },
 
       selectedColor: const Color.fromRGBO(84, 180, 53, 10),

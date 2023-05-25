@@ -1,22 +1,14 @@
 // ignore_for_file: depend_on_referenced_packages, use_key_in_widget_constructors, non_constant_identifier_names, deprecated_member_use, avoid_print
 
 import 'dart:io';
-import 'package:flutter_application_3/model/menu.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_3/Screens/Basket/receipt.dart';
-import 'package:flutter_application_3/Screens/Order/Screen/detail_menu.dart';
-class PayUserScreen extends StatefulWidget {
-  final String id;
-  final String date;
-  final String time;
-  final Menu milktea;
-  const PayUserScreen(this.id,this.date,this.time,this.milktea);
 
+class PayUserScreen extends StatefulWidget {
   @override
   State<PayUserScreen> createState() => _PayUserScreenState();
 }
@@ -27,24 +19,24 @@ class _PayUserScreenState extends State<PayUserScreen> {
   PlatformFile? pickedFile;
   bool isLoading = false;
   File? fileToDisplay;
-  Upload(File imageFile) async {
-    var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    var length = await imageFile.length();
-
-    var uri = Uri.parse("http://10.0.2.2:5000/upload/${sizecupSelect.last}/${toppingSelect.join(",")}/${sweetnessSelect.last}/${amontIncart}/${this.widget.id}");
-
-    var request = http.MultipartRequest("POST", uri);
-    var multipartFile = http.MultipartFile('file', stream, length,
-        filename: basename(imageFile.path));
-    //contentType: new MediaType('image', 'png'));
-
-    request.files.add(multipartFile);
-    var response = await request.send();
-    print(response.statusCode);
-    response.stream.transform(utf8.decoder).listen((value) {
-      print(value);
-    });
-  }
+  // Upload(File imageFile) async {
+  //   var stream = http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+  //   var length = await imageFile.length();
+  //
+  //   var uri = Uri.parse("http://10.0.2.2:5000/upload/${sizecupSelect.last}/${toppingSelect.join(",")}/${sweetnessSelect.last}/${amontIncart}/${this.widget.id}");
+  //
+  //   var request = http.MultipartRequest("POST", uri);
+  //   var multipartFile = http.MultipartFile('file', stream, length,
+  //       filename: basename(imageFile.path));
+  //   //contentType: new MediaType('image', 'png'));
+  //
+  //   request.files.add(multipartFile);
+  //   var response = await request.send();
+  //   print(response.statusCode);
+  //   response.stream.transform(utf8.decoder).listen((value) {
+  //     print(value);
+  //   });
+  // }
   void pickFile() async {
     try{
       setState(() {
@@ -109,11 +101,7 @@ class _PayUserScreenState extends State<PayUserScreen> {
 
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
-                  child:  Image.network(
-                    "https://scontent.fkdt1-1.fna.fbcdn.net/v/t1.15752-9/313379146_837895737660109_4715347241078870872_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=ae9488&_nc_eui2=AeEjUWgvdAuSuOKcsjTUJWy7miV59yUk6b2aJXn3JSTpvWsI4TC-ftfeLvJyh7uWmu6W_qN2GUk8z5qRgiDheOAy&_nc_ohc=mmXiUPlV8zwAX_oRdZz&_nc_ht=scontent.fkdt1-1.fna&oh=03_AdTBT0_c6CK6aCfMRHAEbPBUigzR-TWhCDnsmHAG3cwaYA&oe=638A2BC0",
-                    height: 180,
-                  ),
-
+                  child:  Image.asset("assets/qrcode.png")
                 ),
 
                 const Padding(
@@ -172,7 +160,7 @@ class _PayUserScreenState extends State<PayUserScreen> {
                         padding: EdgeInsets.only(top: 10),
                         child:  Center(
                             child: Text(
-                              "ราคา : ${widget.milktea.menuPrice *amontIncart }",
+                              "ราคา : 50",
                               style: TextStyle(
                                 fontSize: 18,
                               ),
@@ -220,7 +208,7 @@ class _PayUserScreenState extends State<PayUserScreen> {
                       Center(
                         child: ElevatedButton(
                             onPressed: () async{
-                              await Upload(fileToDisplay!);
+                              // await Upload(fileToDisplay!);
                             },
                             child: Text("Upload File")
                         ),
@@ -229,14 +217,15 @@ class _PayUserScreenState extends State<PayUserScreen> {
                       Center(
                         child: ElevatedButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return ReceiptScreen(this.widget.id,this.widget.date,this.widget.time,this.widget.milktea);
-                                  },
-                                ),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) {
+                              //       return ReceiptScreen(this.widget.id,this.widget.date,this.widget.time,this.widget.milktea);
+                              //     },
+                              //   ),
+                              // );
+
                             },
                             child: Text("Submit")
                         ),

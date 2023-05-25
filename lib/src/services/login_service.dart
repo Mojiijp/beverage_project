@@ -75,7 +75,7 @@ class LoginService {
 
     // ทำการดึงข้อมูลจาก server ตาม url ที่กำหนด
     final response = await http.post(
-      Uri.parse('http://192.168.1.4:8000/api/auth/login'),
+      Uri.parse('http://192.168.1.10:8000/api/auth/login'),
       body: json.encode(loginData),
       headers: {'Content-Type': 'application/json'},
     );

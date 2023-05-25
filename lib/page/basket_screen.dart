@@ -139,7 +139,7 @@ class BasketScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "Topping : 000000000",
+                                "Topping : ${Get.arguments["topping"]}",
                                 style: GoogleFonts.kanit(
                                     fontSize: 18,
                                     color: Colors.black

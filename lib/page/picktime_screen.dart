@@ -1,6 +1,7 @@
 // ignore: file_names
 // ignore_for_file: unused_import
 
+import 'package:beverage_project/page/pay_screen.dart';
 import 'package:flutter/material.dart';
 
 class PickTimeScreen extends StatefulWidget {
@@ -100,10 +101,10 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
 
             MaterialButton(
                 onPressed: () {
-                  // Navigator.push(
-                  // context,
-                  // MaterialPageRoute(
-                  //   builder: (context) => const OrderListMenuMilktea()));
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PayUserScreen()));
                 },
                 color: Colors.blue,
                 child: const Padding(

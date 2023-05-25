@@ -59,13 +59,13 @@ class _ListMenuState extends State<ListMenu> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              leading: Image.network('http://192.168.1.4:8000/api/menu/image/${menuTea.id}'),
+              leading: Image.network('http://192.168.1.10:8000/api/menu/image/${menuTea.id}'),
               trailing: const Icon(Icons.arrow_forward),
               onTap: () {
                 // Get.toNamed(Routes.detailScreen);
                 Get.to(() => DetailScreen(),
                   arguments: {
-                    "image" : 'http://192.168.1.4:8000/api/menu/image/${menuTea.id}',
+                    "image" : 'http://192.168.1.10:8000/api/menu/image/${menuTea.id}',
                     "name" : menuTea.name,
                     "price" : menuTea.price
                   }
