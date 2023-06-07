@@ -1,4 +1,4 @@
-import 'package:beverage_project/page/order_screen.dart';
+import 'package:beverage_project/page/order/order_screen.dart';
 import 'package:beverage_project/page/home_screen.dart';
 import 'package:beverage_project/page/menu/menu_screen.dart';
 import 'package:beverage_project/page/profile_screen.dart';

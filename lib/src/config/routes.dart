@@ -1,6 +1,8 @@
 import 'package:beverage_project/page/basket_screen.dart';
 import 'package:beverage_project/page/menu/detail_screen.dart';
-import 'package:beverage_project/page/order_screen.dart';
+import 'package:beverage_project/page/order/history_order_screen.dart';
+import 'package:beverage_project/page/order/order_screen.dart';
+import 'package:beverage_project/page/pay_screen.dart';
 import 'package:beverage_project/page/picktime_screen.dart';
 import 'package:beverage_project/src/model/menu.dart';
 import 'package:beverage_project/src/widgets/buttom_nav_bar.dart';
@@ -20,6 +22,8 @@ class Routes {
   static const orderScreen = "/order";
   static const basketScreen = "/basket";
   static const pickTimeScreen = "/pick-time";
+  static const payScreen = "/pay";
+  static const historyScreen = "/history";
 
 
   static List<GetPage> getPageRoutes() {
@@ -55,6 +59,14 @@ class Routes {
       GetPage(
         name: pickTimeScreen,
         page: () => const PickTimeScreen(),
+      ),
+      GetPage(
+        name: payScreen,
+        page: () => PayUserScreen(),
+      ),
+      GetPage(
+        name: historyScreen,
+        page: () => const HistoryOrderScreen(),
       ),
     ];
   }

@@ -3,6 +3,9 @@
 
 import 'package:beverage_project/page/pay_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class PickTimeScreen extends StatefulWidget {
   const PickTimeScreen({Key? key}) : super(key: key);
@@ -14,78 +17,102 @@ class PickTimeScreen extends StatefulWidget {
 class _PickTimeScreenState extends State<PickTimeScreen> {
 
   //create datetime variable
+  String _getTime = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
   DateTime _date = DateTime.now();
-  TimeOfDay _timeOfDay = const TimeOfDay(hour: 8, minute: 30);
+  //TimeOfDay _timeOfDay = TimeOfDay.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
 
+  //String _gettimeOfDay = DateFormat('HH:mm:ss').format();
   //show date picker method
 
   // ignore: non_constant_identifier_names
-  void _showDatePicker() {
-    showDatePicker(
+  // void _showDatePicker() {
+  //   showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime(2022),
+  //     lastDate: DateTime(2025),
+  //   ).then((value) {
+  //     setState(() {
+  //       _date = value!;
+  //     });
+  //   });
+  // }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2025),
-    ).then((value) {
+      initialTime: _selectedTime,
+    );
+
+    if (picked != null && picked != _selectedTime) {
       setState(() {
-        _date = value!;
+        _selectedTime = picked;
       });
-    });
+    }
   }
 
-  // ignore: unused_element
-  void _showTimePicker() {
-    showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    ).then((value) {
-      setState(() {
-        _timeOfDay = value!;
-      });
-    });
-  }
+  // void _showTimePicker() {
+  //   showTimePicker(
+  //     context: context,
+  //     initialTime: TimeOfDay.now(),
+  //   ).then((value) {
+  //     setState(() {
+  //       _timeOfDay = value!;
+  //     });
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final formattedTime = DateFormat.Hm().format(
+      DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        _selectedTime.hour,
+        _selectedTime.minute,
+      ),
+    );
+
     return Scaffold(
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            //display choose date
+            Text(
+                "เวลาที่สั่งซื้อ\n $_date",
+                style: GoogleFonts.kanit(
+                  fontSize: 20,
+                ),
+              ),
+
+            SizedBox(height: 10,),
+
             // Text(
-            //   _date.toString(),
+            //   "เวลาที่ต้องการรับ\n ${_getTime} ${_timeOfDay.format(context).toString()}",
+            //   style: GoogleFonts.kanit(
+            //     fontSize: 20,
+            //   ),
+            // ),
+
+            Text(
+              'เวลาที่ต้องการรับ\n $_getTime $formattedTime',
+              style: GoogleFonts.kanit(
+                    fontSize: 20,
+              ),
+            ),
+
+            // Text(
+            //   _timeOfDay.format(context).toString(),
             //   style: const TextStyle(
             //     fontSize: 20,
             //   ),
             // ),
-            //
-            // //button
-            // MaterialButton(
-            //     onPressed: _showDatePicker,
-            //     color: Colors.blue,
-            //     child: const Padding(
-            //       padding: EdgeInsets.all(20.0),
-            //       child: Text(
-            //         "Choose Date",
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontSize: 20,
-            //         ),
-            //       ),
-            //     )
-            // ),
-
-            Text(
-              _timeOfDay.format(context).toString(),
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-            ),
 
             MaterialButton(
-                onPressed: _showTimePicker,
+                onPressed: () => _selectTime(context),
                 color: Colors.blue,
                 child: const Padding(
                   padding: EdgeInsets.all(20.0),
@@ -99,19 +126,37 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
                 )
             ),
 
+            Text(
+              "ราคารวม ${Get.arguments["total"]} บาท",
+              style: GoogleFonts.kanit(
+                fontSize: 20,
+              ),
+            ),
+
             MaterialButton(
                 onPressed: () {
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PayUserScreen()));
+                  Get.to(() => PayUserScreen(),
+                      arguments: {
+                        "total" : Get.arguments["total"],
+                        "byTime" : _date,
+                        "getTime" : "$_getTime $formattedTime"
+                        //"getTime" : "${_getTime} ${_timeOfDay.format(context).toString()}",
+                      }
+                  );
                 },
+                // onPressed: () {
+                //   Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => PayUserScreen()));
+                //   print(_timeOfDay.format(context).toString());
+                // },
                 color: Colors.blue,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.all(20.0),
                   child: Text(
-                    "OK",
-                    style: TextStyle(
+                    "จ่ายเงิน",
+                    style: GoogleFonts.kanit(
                       color: Colors.white,
                       fontSize: 20,
                     ),

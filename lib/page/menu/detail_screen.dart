@@ -1,12 +1,18 @@
 // ignore_for_file: unused_import, camel_case_types
 
+import 'dart:ffi';
+
 import 'package:beverage_project/page/basket_screen.dart';
+import 'package:beverage_project/src/config/routes.dart';
 import 'package:beverage_project/src/model/menu.dart';
 import 'package:beverage_project/src/model/topping.dart';
 import 'package:beverage_project/src/services/topping_service.dart';
+import 'package:beverage_project/src/utils/api_endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> toppingSelect = [];
 List<String> sizeCupSelect = [];
@@ -18,19 +24,62 @@ int countSize = 0;
 int countTopping = 0;
 int amountInCart = 1;
 
+///String to list
+int cupSize = 0;
+int sweetnessInt = 0;
+int toppingInt = 0;
+List<int> toppingIntSelect = [];
+
+// String toppingString = toppingInt.toString(); // แปลงจำนวนเต็มเป็นสตริง
+// List<String> topping = toppingString.split(''); // แยกสตริงออกเป็นตัวอักษรแต่ละตัว
+//
+// List<int> toppingList = topping.map((topping) => int.parse(topping)).toList(); // แปลงตัวอักษรแต่ละตัวในรายการเป็นจำนวนเต็ม
+//
+final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+
+OrderIn() async {
+  final SharedPreferences prefs = await _prefs;
+
+  var headers = {
+    'Authorization': 'Bearer ${prefs.getString("token")}'
+  };
+
+  //print(prefs.getString("token"));
+
+  var request = http.MultipartRequest(
+    'POST',
+    Uri.parse(ApiEndPoints.baseUrl+ApiEndPoints.authEndPoints.orderIn)
+    //Uri.parse('http://192.168.1.10:8000/api/menu/order_in')
+  );
+
+  var size = cupSize;
+  var sweetness = sweetnessInt;
+  int bevId =  Get.arguments["id"];
+  var toppingId = toppingIntSelect;
+
+  request.fields.addAll({
+    'mix_data': '[\n{\n "bev_id": $bevId,\n "sweetness": $sweetness,\n "size": $size,\n "topping_id": $toppingId\n }\n]\n'
+  });
+
+  request.headers.addAll(headers);
+
+  http.StreamedResponse response = await request.send();
+
+  print(response.statusCode);
+
+  if (response.statusCode == 200) {
+    print(await response.stream.bytesToString());
+  }
+  else {
+    print(response.reasonPhrase);
+  }
+}
+
 
 class DetailScreen extends StatefulWidget {
 
   const DetailScreen({super.key});
-
-  // final String id;
-  // final String date;
-  // final String time;
-  //final Menu milktea;
-
-  // DetailScreen(this.id,this.date,this.time,
-  //     //this.milktea
-  // );
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -38,40 +87,35 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
 
-
-  void dataStore() async
-  {
-    setState(() async{
-      topping_list = await ToppingService().fetchTopping();}
-    );
-
-    print("toppinggggggggggggggggggggg");
+  dataStore() async {
+    topping_list = await ToppingService().fetchTopping();
   }
 
-
-
-  List<String> chipList1 = [
+  List<String> sizeCup = [
     "Size M",
     "Size L",
   ];
 
-  List<String> chipList2 = [
+  List<String> sweetNess = [
     "ไม่หวาน",
     "หวานน้อย",
+    "หวานปานกลาง",
     "หวานปกติ",
     "หวานมาก",
-    "หวานสุด ๆ",
   ];
-  //
 
   @override
   void initState() {
     super.initState();
-   
-    dataStore(); 
+
+    dataStore();
+
+    setState(() {
+      toppingIntSelect = [];
+      toppingSelect = [];
+      countTopping = 0;
+    });
     print(topping_list);
-    
-    print('len => $topping_list.length');
   }
 
 
@@ -140,10 +184,18 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: <Widget>[
                       Container(
                         width: 400,
-                        height: 320,
+                        height: 260,
                         color: Colors.white,
                         child: Column(
                           children: [
+                            Text(
+                              "Id : ${Get.arguments["id"]}",
+                              style: GoogleFonts.kanit(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff1C6B00)
+                              ),
+                            ),
                             Image(
                               image: NetworkImage(Get.arguments["image"]),
                               width: 150,
@@ -167,22 +219,22 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: Color(0xff1C6B00)
                               ),
                             ),
-                            Text(
-                              "$countSize บาท + ราคาท็อปปิ้ง $countTopping บาท * จำนวน $amountInCart แก้ว",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff1C6B00)
-                              ),
-                            ),
-                            Text(
-                              "รวมราคาเครื่องดื่ม ${(countSize + countTopping) * amountInCart} บาท",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff1C6B00)
-                              ),
-                            ),
+                            // Text(
+                            //   "$countSize บาท + ราคาท็อปปิ้ง $countTopping บาท * จำนวน $amountInCart แก้ว",
+                            //   style: GoogleFonts.kanit(
+                            //       fontSize: 18,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Color(0xff1C6B00)
+                            //   ),
+                            // ),
+                            // Text(
+                            //   "รวมราคาเครื่องดื่ม ${(countSize + countTopping) * amountInCart} บาท",
+                            //   style: GoogleFonts.kanit(
+                            //       fontSize: 18,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Color(0xff1C6B00)
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -197,7 +249,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         spacing: 5.0,
                         runSpacing: 5.0,
                         children: <Widget>[
-                          choiceChipWidget(chipList1),
+                          choiceChipWidget(sizeCup),
                         ],
                       ),
                       const Divider(color: Colors.blueGrey, height: 10.0),
@@ -253,19 +305,19 @@ class _DetailScreenState extends State<DetailScreen> {
                         spacing: 10.0,
                         runSpacing: 10.0,
                         children: <Widget>[
-                          choiceChipWidgetTwo(chipList2),
+                          choiceChipWidgetTwo(sweetNess),
                         ],
                       ),
                       const Divider(color: Colors.blueGrey, height: 10.0),
           
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: _titleContainer("จำนวน"),
-                        ),
-                      ),
-                      const CartCounter(),
+                      // Align(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: _titleContainer("จำนวน"),
+                      //   ),
+                      // ),
+                      // const CartCounter(),
           
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
@@ -273,23 +325,32 @@ class _DetailScreenState extends State<DetailScreen> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
                             // shape: Border.all(width: 5),
-                            onPressed: () {
-                              Get.to(() => BasketScreen(),
+                            onPressed: ()
+                            async
+                            {
+                              await OrderIn();
+                              //Get.toNamed(Routes.basketScreen);
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const BasketScreen()));
+                              Get.to(() => const BasketScreen(),
                                   arguments: {
                                     "image" : Get.arguments["image"],
                                     "name" : Get.arguments["name"],
                                     "price" : Get.arguments["price"],
-                                    "priceCal" : countSize * amountInCart,
+                                    "priceCal" : (countSize + countTopping) * amountInCart,
                                     "amount" : amountInCart,
                                     "sizeCup" : sizeCupSelect.last,
                                     "topping" : toppingSelect.join(","),
                                     "sweet" : sweetnessSelect.last
                                   }
                               );
-                              print("Size cup : ${sizeCupSelect.last}");
-                              print("Topping : ${toppingSelect.join(",")}");
-                              print("Sweetness level : ${sweetnessSelect.last}");
-                              print(countSize * amountInCart);
+                              print("Size cup : $cupSize");
+                              //print("Topping : ${toppingSelect.join(",")}");
+                              print("Topping : $toppingIntSelect");
+                              print("Sweetness level : $sweetnessInt");
+                              print("Price : ${(countSize + countTopping) * amountInCart}");
                             },
                             color: Color.fromRGBO(84, 180, 53, 10),
                             child: const Padding(
@@ -351,72 +412,125 @@ class _filterChipWidgetState extends State<filterChipWidget> {
       backgroundColor: const Color(0xffffffff),
       onSelected: (isSelected) {
         isSelected?
+
         setState(() {
           toppingSelect.add(widget.chipName.split(" ")[0]);
-
-          if(widget.chipName == "ไข่มุก + 0"){
+          if(widget.chipName == "ไม่ใส่ท็อปปิ้ง + 0"){
             countTopping = countTopping + 0;
+            toppingIntSelect.add(0);
+            toppingInt = 0;
+          }else if(widget.chipName == "ไข่มุก + 0"){
+            countTopping = countTopping + 0;
+            toppingIntSelect.add(1);
+            toppingInt = 1;
           }else if(widget.chipName == "พุดดิ้ง + 5"){
             countTopping = countTopping + 5;
+            toppingIntSelect.add(2);
+            toppingInt = 2;
           }else if(widget.chipName == "เฉาก๊วย + 5"){
             countTopping = countTopping + 5;
+            toppingIntSelect.add(3);
+            toppingInt = 3;
           }else if(widget.chipName == "วุ้นลิ้นจี่ + 5"){
             countTopping = countTopping + 5;
+            toppingIntSelect.add(4);
+            toppingInt = 4;
           }else if(widget.chipName == "วุ้นแอปเปิ้ล + 5"){
             countTopping = countTopping + 5;
+            toppingIntSelect.add(5);
+            toppingInt = 5;
           }else if(widget.chipName == "วุ้นสตรอว์เบอร์รี่ + 5"){
             countTopping = countTopping + 5;
+            toppingIntSelect.add(6);
+            toppingInt = 6;
           }else if(widget.chipName == "บราวน์ชูการ์ + 5"){
             countTopping = countTopping + 5;
+            toppingIntSelect.add(7);
+            toppingInt = 7;
           }else if(widget.chipName == "น้ำผึ้ง + 5"){
             countTopping = countTopping + 5;
+            toppingIntSelect.add(8);
+            toppingInt = 8;
           }else if(widget.chipName == "บราวน์ชูการ์เจลลี่ + 10"){
             countTopping = countTopping + 10;
+            toppingIntSelect.add(9);
+            toppingInt = 9;
           }else if(widget.chipName == "ว่านหางจรเข้เชื่อม + 15"){
             countTopping = countTopping + 15;
+            toppingIntSelect.add(10);
+            toppingInt = 10;
           }else if(widget.chipName == "ครีมชีส + 15"){
             countTopping = countTopping + 15;
+            toppingIntSelect.add(11);
+            toppingInt = 11;
           }else if(widget.chipName == "วิปครีม + 15"){
             countTopping = countTopping + 15;
+            toppingIntSelect.add(12);
+            toppingInt = 12;
           }
-
-
-        })
-
-        : setState(() {
-
+        }) : setState(() {
           toppingSelect.remove(widget.chipName.split(" ")[0]);
 
-          if(widget.chipName == "ไข่มุก + 0"){
+          if(widget.chipName == "ไม่ใส่ท็อปปิ้ง + 0") {
             countTopping = 0;
+            toppingIntSelect.remove(0);
+            toppingInt = 0;
+          }else if(widget.chipName == "ไข่มุก + 0"){
+            countTopping = 0;
+            toppingIntSelect.remove(1);
+            toppingInt = 1;
           }else if(widget.chipName == "พุดดิ้ง + 5"){
             countTopping = countTopping - 5;
+            toppingInt = 2;
+            toppingIntSelect.remove(2);
           }else if(widget.chipName == "เฉาก๊วย + 5"){
             countTopping = countTopping - 5;
+            toppingIntSelect.remove(3);
+            toppingInt = 3;
           }else if(widget.chipName == "วุ้นลิ้นจี่ + 5"){
             countTopping = countTopping - 5;
+            toppingIntSelect.remove(4);
+            toppingInt = 4;
           }else if(widget.chipName == "วุ้นแอปเปิ้ล + 5"){
             countTopping = countTopping - 5;
+            toppingIntSelect.remove(5);
+            toppingInt = 5;
           }else if(widget.chipName == "วุ้นสตรอว์เบอร์รี่ + 5"){
             countTopping = countTopping - 5;
+            toppingIntSelect.remove(6);
+            toppingInt = 6;
           }else if(widget.chipName == "บราวน์ชูการ์ + 5"){
             countTopping = countTopping - 5;
+            toppingIntSelect.remove(7);
+            toppingInt = 7;
           }else if(widget.chipName == "น้ำผึ้ง + 5"){
             countTopping = countTopping - 5;
+            toppingIntSelect.remove(8);
+            toppingInt = 8;
           }else if(widget.chipName == "บราวน์ชูการ์เจลลี่ + 10"){
             countTopping = countTopping - 10;
+            toppingIntSelect.remove(9);
+            toppingInt = 9;
           }else if(widget.chipName == "ว่านหางจรเข้เชื่อม + 15"){
             countTopping = countTopping - 15;
+            toppingIntSelect.remove(10);
+            toppingInt = 10;
           }else if(widget.chipName == "ครีมชีส + 15"){
             countTopping = countTopping - 15;
+            toppingIntSelect.remove(11);
+            toppingInt = 11;
           }else if(widget.chipName == "วิปครีม + 15"){
             countTopping = countTopping - 15;
+            toppingIntSelect.remove(12);
+            toppingInt = 12;
           }
         });
         setState(() {
           _isSelected = isSelected;
         });
-        print("Selected: $toppingSelect");
+        print("Topping selected: $toppingSelect");
+        print("Topping Int selected: $toppingIntSelect");
+        //print("Topping int : $toppingInt");
         print("Topping price : $countTopping");
       },
 
@@ -440,42 +554,44 @@ class _choiceChipWidgetState extends State<choiceChipWidget> {
   _buildChoiceList() {
 
     List<Widget> choices = [];
+
     for (var item in widget.reportList) {
-      choices.add(Container(
-        padding: const EdgeInsets.all(2.0),
-        child: ChoiceChip(
-          label: Text(item),
-          labelStyle: const TextStyle(
-              color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.bold),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
+      choices.add(
+        Container(
+          padding: const EdgeInsets.all(2.0),
+          child: ChoiceChip(
+            label: Text(item),
+            labelStyle: const TextStyle(
+                color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.bold),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            backgroundColor: const Color(0xffffffff),
+            selectedColor: const Color.fromRGBO(84, 180, 53, 10),
+            selected: selectedChoice == item,
+            onSelected: (isSelected) {
+              if(selectedChoice == "Size M") {
+                countSize = Get.arguments["price"];
+                cupSize = 1;
+                sizeCupSelect.add(item);
+                print("click size M =  $countSize Bath");
+                // print(sizeCupSelect.last);
+                print(cupSize);
+              }else if(selectedChoice == "Size L") {
+                cupSize = 2;
+                sizeCupSelect.add(item);
+                countSize = Get.arguments["price"]+ 5;
+                print("click size L =  $countSize Bath");
+                // print(sizeCupSelect.last);
+                print(cupSize);
+              }
+              setState(() {
+                selectedChoice = item;
+              });
+            },
           ),
-          backgroundColor: const Color(0xffffffff),
-          selectedColor: const Color.fromRGBO(84, 180, 53, 10),
-          selected: selectedChoice == item,
-          onSelected: (isSelected) {
-            if(selectedChoice == "Size M") {
-              countSize = Get.arguments["price"];
-              sizeCupSelect.add(item);
-              print("click size M =  $countSize Bath");
-              print(sizeCupSelect.last);
-            }else if(selectedChoice == "Size L") {
-              countSize = Get.arguments["price"]+ 5;
-              print("click size L =  $countSize Bath");
-            }
-            // isSelected?
-            // setState(() {
-            //   sizecupSelect.add(item);
-            // })
-            //     : setState(() {
-            //   sizecupSelect.remove(item);
-            // });
-            setState(() {
-              selectedChoice = item;
-            });
-          },
-        ),
-      ));
+        )
+      );
     }
     return choices;
   }
@@ -517,17 +633,50 @@ class _choiceChipWidgetTwoState extends State<choiceChipWidgetTwo> {
           selectedColor: const Color.fromRGBO(84, 180, 53, 10),
           selected: selectedChoice == item,
           onSelected: (isSelected) {
-            isSelected?
-            setState(() {
-              sweetnessSelect.add(item);
-            })
-                : setState(() {
-              sweetnessSelect.remove(item);
-            });
+            sweetnessSelect.add(item);
+            if(selectedChoice == "ไม่หวาน") {
+                sweetnessInt = 0;
+                print("no sugar : $sweetnessInt");
+              } else if(selectedChoice == "หวานน้อย") {
+                sweetnessInt = 1;
+                print("low sugar : $sweetnessInt");
+              } else if(selectedChoice == "หวานปานกลาง") {
+                sweetnessInt = 2;
+                print("sugar ปานกลาง : $sweetnessInt");
+              } else if(selectedChoice == "หวานปกติ") {
+                sweetnessInt = 3;
+                print("sugar ปกติ : $sweetnessInt");
+              } else if(selectedChoice == "หวานมาก") {
+                sweetnessInt = 4;
+                print("sugar หวานมาก : $sweetnessInt");
+              }
+            // isSelected?
+            // setState(() {
+            //   sweetnessSelect.add(item);
+            //   if(selectedChoice == "ไม่หวาน") {
+            //     sweetnessInt = 0;
+            //     print("no sugar : $sweetnessInt");
+            //   } else if(selectedChoice == "หวานน้อย") {
+            //     sweetnessInt = 1;
+            //     print("low sugar : $sweetnessInt");
+            //   } else if(selectedChoice == "หวานปานกลาง") {
+            //     sweetnessInt = 2;
+            //     print("sugar ปานกลาง : $sweetnessInt");
+            //   } else if(selectedChoice == "หวานปกติ") {
+            //     sweetnessInt = 3;
+            //     print("sugar ปกติ : $sweetnessInt");
+            //   } else if(selectedChoice == "หวานมาก") {
+            //     sweetnessInt = 4;
+            //     print("sugar หวานมาก : $sweetnessInt");
+            //   }
+            // }) : setState(() {
+            //   sweetnessSelect.remove(item);
+            // });
             setState(() {
               selectedChoice = item;
             });
             print(sweetnessSelect.last);
+            print(sweetnessInt);
           },
         ),
       ));

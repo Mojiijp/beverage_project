@@ -22,7 +22,8 @@ class RegisterService {
 
     // ทำการดึงข้อมูลจาก server ตาม url ที่กำหนด
     final response = await http.post(
-      Uri.parse('http://192.168.1.10:8000/api/auth/register'), // ใช้ url จากค่าที่กำหนด
+      Uri.parse(ApiEndPoints.baseUrl+ApiEndPoints.authEndPoints.register), // ใช้ url จากค่าที่กำหนด
+      //Uri.parse('http://192.168.1.10:8000/api/auth/register'), // ใช้ url จากค่าที่กำหนด
       body: json.encode(userData),
       headers: {'Content-Type': 'application/json'},
     );
