@@ -13,6 +13,36 @@ import 'package:http/http.dart' as http;
 ///API
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
+
+class SummaryScreen extends StatefulWidget {
+  const SummaryScreen({Key? key}) : super(key: key);
+
+  @override
+  State<SummaryScreen> createState() => _SummaryScreenState();
+}
+
+class _SummaryScreenState extends State<SummaryScreen> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  final List size = ["","M","L"];
+  final List sugar = ["ไม่หวาน","น้อย","ปานกลาง","ปกติ","มาก"];
+  String get_at ="";
+  String buy_at ="";
+  String image_name ="";
+  @override
+  void initState() {
+    super.initState();
+  setState(() {
+    get_at = Get.arguments['getTime'];
+    buy_at = Get.arguments['byTime'];
+    image_name = Get.arguments['imageName'];
+    });
+    // _getOrderInCart();
+  }
+
+
+
+
 orderInConf(double totalPrice, int id) async {
   final SharedPreferences prefs = await _prefs;
 
@@ -26,8 +56,8 @@ orderInConf(double totalPrice, int id) async {
   );
 
   request.fields.addAll({
-    'buy_at': '${Get.arguments['byTime']}',
-    'get_at': '${Get.arguments['getTime']}',
+    'buy_at': '${buy_at}',
+    'get_at': '${get_at}',
     'amount': '1',
     'total_price': '${totalPrice}',
     'id': '${id}'
@@ -36,7 +66,7 @@ orderInConf(double totalPrice, int id) async {
   request.files.add(
       await http.MultipartFile.fromPath(
         'slip_img',
-        '${Get.arguments["imageName"]}'
+        '${image_name}',
         //'/data/user/0/com.example.beverage_project/cache/file_picker/79a45824db0bd561642f5c7d2c6d1000.jpg'
     )
   );
@@ -56,15 +86,8 @@ orderInConf(double totalPrice, int id) async {
 
 }
 
-class SummaryScreen extends StatefulWidget {
-  const SummaryScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SummaryScreen> createState() => _SummaryScreenState();
-}
 
-class _SummaryScreenState extends State<SummaryScreen> {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   Future<List<MyDataModel>> _getOrderInCart() async {
     final SharedPreferences prefs = await _prefs;
@@ -96,33 +119,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
     } else {
       throw Exception('Failed to load data');
     }
-
-    // List jsonresponse = json.decode(response.body);
-    //
-    // print(jsonresponse);
-
-    // if(response.statusCode == 200) {
-    //   print("Load order in cart success");
-    //   print(response.body);
-    //
-    //
-    //   // orderResponse = orderResponseFromJson(response.body);
-    //   // _isLoading = false;
-    //   //
-    //   // setState(() {
-    //   //
-    //   // });
-    //   // orderResponse = Order.fromJson(json.decode(response.body));
-    //   //
-    //   //return Order.fromJson(json.decode(response.body));
-    //   // final body = jsonDecode(response.body);
-    //   // setState(() {
-    //   //  orderResponse = orderResponseFromJson(body);
-    //   // });
-    //   // print(body.toString());
-    //   // return orderResponse;
-    // }
-    // return MyDataModel.fromJson(jsonresponse[0]);
   }
 
   @override
@@ -197,7 +193,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                 children: [
                                   //Text('Menu ID: ${menu.id}'),
                                   Container(
-                                    height: 350,
+                                    height: 300,
                                     child: ListView.builder(
                                         shrinkWrap: true,
                                         itemCount: menu.menuDetail.length,
@@ -207,8 +203,8 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                           return Padding(
                                             padding: const EdgeInsets.all(5.0),
                                             child: Container(
-                                              width: 500,
-                                              height: 230,
+                                              width: 300,
+                                              height: 200,
                                               decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(20),
                                                   color: Colors.white
@@ -288,7 +284,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                                         //   ),
                                                         // ),
                                                         Text(
-                                                          "ขนาดแก้ว : ${menuDetail.size}",
+                                                          "ขนาดแก้ว : ${size[menuDetail.size]}",
                                                           //"ขนาดแก้ว : ${Get.arguments["sizeCup"]}",
                                                           style: GoogleFonts.kanit(
                                                               fontSize: 18,
@@ -303,7 +299,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          "ระดับความหวาน : ${menuDetail.sweetness}",
+                                                          "ระดับความหวาน : ${sugar[menuDetail.sweetness]}",
                                                           style: GoogleFonts.kanit(
                                                               fontSize: 18,
                                                               color: Colors.black
@@ -329,7 +325,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          "เวลาที่สั่งซื้อ : ${Get.arguments["byTime"]}",
+                                          "เวลาที่สั่งซื้อ : ${buy_at}",
                                           //"ระดับความหวาน : ${Get.arguments["sweet"]}",
                                           style: GoogleFonts.kanit(
                                               fontSize: 18,
@@ -337,7 +333,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "เวลาที่ต้องการรับ : ${Get.arguments["getTime"]}",
+                                          "เวลาที่ต้องการรับ : ${get_at}",
                                           //"ระดับความหวาน : ${Get.arguments["sweet"]}",
                                           style: GoogleFonts.kanit(
                                               fontSize: 18,
@@ -351,7 +347,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "ไฟล์ : ${Get.arguments["imageName"]}",
+                                          "ไฟล์ : ${image_name}",
                                           //"ระดับความหวาน : ${Get.arguments["sweet"]}",
                                           style: GoogleFonts.kanit(
                                               fontSize: 10,
@@ -364,7 +360,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
 
                                   SizedBox(height: 10,),
                                   Container(
-                                    height: 100,
+                                    height: 200,
                                     //margin: const EdgeInsets.only(top: 5),
                                     //padding: const EdgeInsets.all(20),
                                     decoration: const BoxDecoration(

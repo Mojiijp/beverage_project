@@ -22,7 +22,8 @@ class BasketScreen extends StatefulWidget {
 
 class _BasketScreenState extends State<BasketScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
+  final List size = ["","M","L"];
+  final List sugar = ["ไม่หวาน","น้อย","ปานกลาง","ปกติ","มาก"];
   Future<List<MyDataModel>> _getOrderInCart() async {
     final SharedPreferences prefs = await _prefs;
 
@@ -345,7 +346,7 @@ class _BasketScreenState extends State<BasketScreen> {
                                                       //   ),
                                                       // ),
                                                       Text(
-                                                        "ขนาดแก้ว : ${menuDetail.size}",
+                                                        "ขนาดแก้ว : ${size[menuDetail.size]}",
                                                         //"ขนาดแก้ว : ${Get.arguments["sizeCup"]}",
                                                         style: GoogleFonts.kanit(
                                                             fontSize: 18,
@@ -360,7 +361,7 @@ class _BasketScreenState extends State<BasketScreen> {
                                                         ),
                                                       ),
                                                       Text(
-                                                        "ระดับความหวาน : ${menuDetail.sweetness}",
+                                                        "ระดับความหวาน : ${sugar[menuDetail.sweetness]}",
                                                         style: GoogleFonts.kanit(
                                                             fontSize: 18,
                                                             color: Colors.black

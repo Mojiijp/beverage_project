@@ -17,11 +17,20 @@ class PickTimeScreen extends StatefulWidget {
 class _PickTimeScreenState extends State<PickTimeScreen> {
 
   //create datetime variable
-  String _getTime = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
-  DateTime _date = DateTime.now();
+  String _getTime = "";
+  String _date = DateFormat('yyyy-MM-dd hh:mm').format(DateTime.now());
   //TimeOfDay _timeOfDay = TimeOfDay.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
 
+  // String temp = "";
+
+  // List<String> data_spit = _getTime.split(" ");
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _getTime = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  //   // _timeOfDay = TimeOfDay.now();
+  // }
   //String _gettimeOfDay = DateFormat('HH:mm:ss').format();
   //show date picker method
 
@@ -38,6 +47,18 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
   //     });
   //   });
   // }
+
+  @override
+  void initState() {
+    super.initState();
+    _getTime =  DateFormat('yyyy-MM-dd').format(DateTime.now());
+    List<String> dataSplit =  _getTime.split(" ");
+
+    setState(() {
+      _getTime = dataSplit[0];
+        });
+    
+  }
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(

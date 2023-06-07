@@ -1,5 +1,6 @@
 import 'package:beverage_project/page/basket_screen.dart';
 import 'package:beverage_project/page/menu/detail_screen.dart';
+import 'package:beverage_project/page/order/history_order2.dart';
 import 'package:beverage_project/page/order/history_order_screen.dart';
 import 'package:beverage_project/page/order/order_screen.dart';
 import 'package:beverage_project/page/pay_screen.dart';
@@ -24,6 +25,7 @@ class Routes {
   static const pickTimeScreen = "/pick-time";
   static const payScreen = "/pay";
   static const historyScreen = "/history";
+  static const historyScreen2 = "/history2";
 
 
   static List<GetPage> getPageRoutes() {
@@ -67,6 +69,10 @@ class Routes {
       GetPage(
         name: historyScreen,
         page: () => const HistoryOrderScreen(),
+      ),
+      GetPage(
+        name: historyScreen2,
+        page: () => const HistoryOrderScreen2(),
       ),
     ];
   }
