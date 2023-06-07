@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:beverage_project/page/basket_screen.dart';
 import 'package:beverage_project/page/menu/detail_screen.dart';
 import 'package:beverage_project/page/menu/list_menu.dart';
+import 'package:beverage_project/page/noti_screen.dart';
 import 'package:beverage_project/page/order/order_screen.dart';
 import 'package:beverage_project/src/config/routes.dart';
 import 'package:beverage_project/src/model/menu.dart';
@@ -122,7 +123,14 @@ class _MenuScreenState extends State<MenuScreen> {
                         color: Colors.white,
                       ),
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NotiScreen()
+                              )
+                          );
+                        },
                         icon: const Icon(Icons.notifications, size: 35,),
                       ),
                     )

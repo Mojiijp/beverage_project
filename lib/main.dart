@@ -2,11 +2,11 @@ import 'package:beverage_project/page/login_screen.dart';
 import 'package:beverage_project/src/config/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 void main() {
   runApp(const MyApp());
-
+//
 //   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 //   OneSignal.shared.setAppId("2aa54f4f-a694-4e71-a045-806b3c621769");
 //   OneSignal.shared

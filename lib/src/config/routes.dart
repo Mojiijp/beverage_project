@@ -70,10 +70,10 @@ class Routes {
         name: historyScreen,
         page: () => const HistoryOrderScreen(),
       ),
-      GetPage(
-        name: historyScreen2,
-        page: () => const HistoryOrderScreen2(),
-      ),
+      // GetPage(
+      //   name: historyScreen2,
+      //   page: () => HistoryOrderScreen2(),
+      // ),
     ];
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../model/login.dart';
 
@@ -102,6 +103,16 @@ class LoginService {
       await prefs.setString("token", result['access_token']);
       await prefs.setBool("loginSuccess", true);
         //notifyListeners();
+
+        OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+        OneSignal.shared.setAppId("2aa54f4f-a694-4e71-a045-806b3c621769");
+        OneSignal.shared
+            .promptUserForPushNotificationPermission(fallbackToSettings: true);
+        OneSignal.shared.sendTag('membership_no', result['user']['id']);
+      // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+        OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+          print("Accepted permission: $accepted");
+        });
 
       print(result['user']['email']);
       print(result['user']['name']);

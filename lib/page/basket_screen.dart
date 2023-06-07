@@ -24,6 +24,7 @@ class _BasketScreenState extends State<BasketScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final List size = ["","M","L"];
   final List sugar = ["ไม่หวาน","น้อย","ปานกลาง","ปกติ","มาก"];
+
   Future<List<MyDataModel>> _getOrderInCart() async {
     final SharedPreferences prefs = await _prefs;
 
@@ -77,6 +78,16 @@ class _BasketScreenState extends State<BasketScreen> {
       print(response.reasonPhrase);
     }
   }
+  Future<List<MyDataModel>> _data_cart = Future<List<MyDataModel>>.value([]);
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _data_cart = _getOrderInCart();
+    });
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +147,7 @@ class _BasketScreenState extends State<BasketScreen> {
               color: Color(0xffEDF1D6),
               //color: Colors.pink,
               child: FutureBuilder<List<MyDataModel>> (
-                future: _getOrderInCart(),
+                future: _data_cart,
                 builder: (BuildContext context, AsyncSnapshot<List<MyDataModel>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator()); // แสดงการโหลดข้อมูล
@@ -145,7 +156,7 @@ class _BasketScreenState extends State<BasketScreen> {
                     print(snapshot.data);
                     print(snapshot);
                     return Text('เกิดข้อผิดพลาด: ${snapshot.error}'); // แสดงข้อผิดพลาด
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty || snapshot.data==[] || snapshot.data!.length == 0 ||snapshot.data![0].menuDetail.isEmpty) {
                     return Column(
                       children: [
                         SizedBox(
@@ -303,6 +314,9 @@ class _BasketScreenState extends State<BasketScreen> {
                                                         IconButton(
                                                           onPressed: () {
                                                             deleteOrder(mixBevID);
+                                                              setState(() {
+                                                            _data_cart = _getOrderInCart();
+                                                                         });
                                                             print("Delete");
                                                           },
                                                           icon: Icon(

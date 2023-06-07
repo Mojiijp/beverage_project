@@ -30,6 +30,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
   String buy_at ="";
   String image_name ="";
   @override
+  
   void initState() {
     super.initState();
   setState(() {

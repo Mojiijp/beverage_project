@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:beverage_project/page/order/history_order2.dart';
+import 'package:beverage_project/src/config/routes.dart';
 import 'package:beverage_project/src/model/history.dart';
 import 'package:http/http.dart' as http;
 import 'package:beverage_project/src/model/order.dart';
@@ -41,6 +43,9 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen> {
       throw Exception('Failed to load data');
     }
   }
+
+  final List size = ["","M","L"];
+  final List sugar = ["ไม่หวาน","น้อย","ปานกลาง","ปกติ","มาก"];
 
   bool _isShow = true;
 
@@ -158,7 +163,11 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-
+                                Get.to(() => const HistoryOrderScreen2(),
+                                    arguments: {
+                                      "id" : menu.id,
+                                    }
+                                );
                                 print("Tap history");
                               },
                               child: Padding(
@@ -198,6 +207,119 @@ class _HistoryOrderScreenState extends State<HistoryOrderScreen> {
                                 ),
                               ),
                             ),
+
+                            // Container(
+                            //   height: 250,
+                            //   child: ListView.builder(
+                            //       shrinkWrap: true,
+                            //       itemCount: menu.menuDetail.length,
+                            //       itemBuilder: (context, index) {
+                            //         //double totalPrice = menu.menuDetail.fold(0.0, (sum, item) => sum + (item.price ?? 0.0));
+                            //         final menuDetail = menu.menuDetail[index];
+                            //         final mixBevID = menuDetail.id;
+                            //         return Padding(
+                            //           padding: const EdgeInsets.all(5.0),
+                            //           child: Column(
+                            //             children: [
+                            //               Container(
+                            //                 height: 200,
+                            //                 decoration: BoxDecoration(
+                            //                     borderRadius: BorderRadius.circular(20),
+                            //                     color: Colors.white
+                            //                 ),
+                            //                 child: Column(
+                            //                   crossAxisAlignment: CrossAxisAlignment.stretch,
+                            //                   children: [
+                            //                     Row(
+                            //                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            //                       children: [
+                            //                         Image(
+                            //                             width: 100,
+                            //                             height: 100,
+                            //                             image: NetworkImage('http://192.168.1.6:8000/api/menu/image/${menuDetail.bevInfo.id}')
+                            //                         ),
+                            //                         Column(
+                            //                           children: [
+                            //                             Text(
+                            //                               menuDetail.bevInfo.name,
+                            //                               //Get.arguments["name"],
+                            //                               style: GoogleFonts.kanit(
+                            //                                   fontSize: 28,
+                            //                                   color: Colors.black
+                            //                               ),
+                            //                             ),
+                            //                             Text(
+                            //                               "${menuDetail.price} บาท",
+                            //                               style: GoogleFonts.kanit(
+                            //                                   fontSize: 28,
+                            //                                   color: Colors.green
+                            //                               ),
+                            //                             ),
+                            //                           ],
+                            //                         ),
+                            //                         Column(
+                            //                           children: [
+                            //                             Container(
+                            //                               width: 30,
+                            //                               height: 30,
+                            //                               decoration: BoxDecoration(
+                            //                                   borderRadius: BorderRadius.circular(5),
+                            //                                   color: Colors.green
+                            //                               ),
+                            //                               child: Text(
+                            //                                 "1",
+                            //                                 //Get.arguments["amount"].toString(),
+                            //                                 style: GoogleFonts.mulish(
+                            //                                   fontSize: 28,
+                            //                                   color: Colors.black,
+                            //                                 ),
+                            //                                 textAlign: TextAlign.center,
+                            //                               ),
+                            //                             ),
+                            //                           ],
+                            //                         )
+                            //                       ],
+                            //                     ),
+                            //                     Padding(
+                            //                       padding: const EdgeInsets.all(8.0),
+                            //                       child: Column(
+                            //                         crossAxisAlignment: CrossAxisAlignment.start,
+                            //                         children: [
+                            //                           Text(
+                            //                             "ขนาดแก้ว : ${size[menuDetail.size]}",
+                            //                             //"ขนาดแก้ว : ${Get.arguments["sizeCup"]}",
+                            //                             style: GoogleFonts.kanit(
+                            //                                 fontSize: 18,
+                            //                                 color: Colors.black
+                            //                             ),
+                            //                           ),
+                            //                           Text(
+                            //                             "Topping : ${menuDetail.bevToppingAddInfo.join(",")}",
+                            //                             style: GoogleFonts.kanit(
+                            //                                 fontSize: 18,
+                            //                                 color: Colors.black
+                            //                             ),
+                            //                           ),
+                            //                           Text(
+                            //                             "ระดับความหวาน : ${sugar[menuDetail.sweetness]}",
+                            //                             style: GoogleFonts.kanit(
+                            //                                 fontSize: 18,
+                            //                                 color: Colors.black
+                            //                             ),
+                            //                           ),
+                            //                         ],
+                            //                       ),
+                            //                     )
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //
+                            //             ],
+                            //           ),
+                            //         );
+                            //       }
+                            //   ),
+                            // ),
 
                             SizedBox(height: 10,),
                             // Container(
