@@ -228,11 +228,11 @@ class _HistoryOrderScreen2State extends State<HistoryOrderScreen2> {
                             Padding(
                               padding: const EdgeInsets.only(top: 5),
                               child: Container(
-                                height: 120,
+                                height: 140,
                                 width: 400,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  color: Colors.pink,
+                                  color: Color(0xff9DC08B),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),

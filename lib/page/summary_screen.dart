@@ -42,8 +42,6 @@ class _SummaryScreenState extends State<SummaryScreen> {
   }
 
 
-
-
 orderInConf(double totalPrice, int id) async {
   final SharedPreferences prefs = await _prefs;
 
@@ -321,7 +319,7 @@ orderInConf(double totalPrice, int id) async {
                                     height: 180,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
-                                      color: Colors.blueAccent,
+                                      color: Color(0xff9DC08B),
                                     ),
                                     child: Column(
                                       children: [
@@ -361,7 +359,7 @@ orderInConf(double totalPrice, int id) async {
 
                                   SizedBox(height: 10,),
                                   Container(
-                                    height: 200,
+                                    height: 220,
                                     //margin: const EdgeInsets.only(top: 5),
                                     //padding: const EdgeInsets.all(20),
                                     decoration: const BoxDecoration(

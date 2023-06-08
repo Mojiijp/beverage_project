@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:beverage_project/src/model/noti.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -125,7 +126,7 @@ class _NotiScreenState extends State<NotiScreen> {
                   return Column(
                     children: [
                       Container(
-                        height: 580,
+                        height: 720,
                         child: Expanded(
                           child: ListView.builder(
                             itemCount: snapshot.data!.length,
@@ -137,27 +138,31 @@ class _NotiScreenState extends State<NotiScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 10),
                                     child: Container(
-                                      height: 100,
-                                      width: 390,
+                                      height: 168,
+                                      width: 380,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(20),
-                                          color: Colors.blueAccent
+                                          color: Colors.white
                                       ),
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            '${noti.id}',
-                                            style: GoogleFonts.kanit(
-                                                fontSize: 20
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '${noti.createdAt}',
+                                              style: GoogleFonts.kanit(
+                                                  fontSize: 20
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            'รายละเอียด : ${noti.content}',
-                                            style: GoogleFonts.kanit(
-                                                fontSize: 20
+                                            Text(
+                                              '${noti.content}',
+                                              style: GoogleFonts.kanit(
+                                                  fontSize: 20
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

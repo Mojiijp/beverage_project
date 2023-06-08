@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'package:beverage_project/page/summary_screen.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +53,7 @@ class _PayUserScreenState extends State<PayUserScreen> {
     var headers = {
       'Authorization': 'Bearer ${prefs.getString("token")}',
     };
-    var request = http.MultipartRequest('POST', Uri.parse('http://192.168.1.5:8000/api/menu/order_in_conf'));
+    var request = http.MultipartRequest('POST', Uri.parse('http://192.168.1.6:8000/api/menu/order_in_conf'));
 
     request.files.add(
       await http.MultipartFile.fromPath(
@@ -112,229 +113,227 @@ class _PayUserScreenState extends State<PayUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: const Text("Pay Screen")),
-
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child:  Center(
-                        child: Text(
-                            "ช่องทางการชำระเงิน",
-                            style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)
-                        )
-                    )
+      backgroundColor: const Color(0xffEDF1D6),
+      body : SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ///App bar
+              Container(
+                width: 500,
+                height: 60,
+                color: const Color(0xff609966),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          icon: const Icon(Icons.arrow_back_ios_outlined, size: 35,),
+                        ),
+                      ),
+                      Text(
+                        "ชำระเงิน",
+                        style: GoogleFonts.kanit(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                        ),
+                      ),
+                      Container(
+                        width: 50,
+                        height: 50,
+                      )
+                    ],
+                  ),
                 ),
+              ),
 
-                const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child:  Center(
-                        child: Text(
-                            "แสกน QRCode ได้เลยจ้า",
-                            style: TextStyle(fontSize: 18)
-                        )
-                    )
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Image.network("https://promptpay.io/0852994229/${Get.arguments["total"]}")
-                  //Image.asset("assets/qrcode.png")
-                ),
-
-                const Padding(
-                    padding: EdgeInsets.only(top: 10),
-                    child:  Center(
-                        child: Text(
-                          "ธนาคารกสิกรไทย",
-                          style: TextStyle(fontSize: 18, color: Colors.green),
-
-                        )
-                    )
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // ignore: prefer_const_literals_to_create_immutables
+              Container(
+                height: 1500,
+                child: Column(
                   children: [
-                    const Padding(
+                    Padding(
                         padding: EdgeInsets.only(top: 10),
                         child:  Center(
                             child: Text(
-                              "เลขที่บัญชี : 123456789",
-                              style: TextStyle(
-                                fontSize: 18,
-
+                              "แสกน QR Code ได้เลยจ้า",
+                              style: GoogleFonts.kanit(
+                                fontSize: 22,
                               ),
-                            )
+                            ),
                         )
                     ),
-                  ],
-                ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
-                    const Padding(
+                    Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Image.network("https://promptpay.io/0852994229/${Get.arguments["total"]}")
+                      //Image.asset("assets/qrcode.png")
+                    ),
+
+                    Padding(
                         padding: EdgeInsets.only(top: 10),
                         child:  Center(
                             child: Text(
                               "ชื่อบัญชี : บจก.ถังชา",
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: GoogleFonts.kanit(
+                                fontSize: 22,
                               ),
-                            )
+                            ),
                         )
                     ),
-                  ],
-                ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
                     Padding(
                         padding: EdgeInsets.only(top: 10),
                         child:  Center(
                             child: Text(
-                              "ราคา : ${Get.arguments["total"]}",
-                              style: TextStyle(
-                                fontSize: 18,
+                              "ราคา : ${Get.arguments["total"]} บาท",
+                              style: GoogleFonts.kanit(
+                                fontSize: 22,
                               ),
-                            )
+                            ),
                         )
                     ),
-                  ],
-                ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
                     Padding(
                         padding: EdgeInsets.only(top: 10),
                         child:  Center(
                             child: Text(
-                              "เวลาสั่งซื้อ : ${Get.arguments["byTime"]}",
+                              "เวลาสั่งซื้อ : ${Get.arguments["byTime"]} น.",
                               //"เวลารับ : ${Get.arguments["time"]}",
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: GoogleFonts.kanit(
+                                fontSize: 22,
                               ),
                             )
                         )
                     ),
-                  ],
-                ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  // ignore: prefer_const_literals_to_create_immutables
-                  children: [
                     Padding(
                         padding: EdgeInsets.only(top: 10),
                         child:  Center(
                             child: Text(
-                              "เวลารับ : ${Get.arguments["getTime"]}",
+                              "เวลารับ : ${Get.arguments["getTime"]} น.",
                               //"เวลารับ : ${Get.arguments["time"]}",
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: GoogleFonts.kanit(
+                                fontSize: 22,
                               ),
                             )
                         )
                     ),
-                  ],
-                ),
 
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      const Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child:  Center(
-                              child: Text(
-                                "แนบสลิปชำระเงิน",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        // ignore: prefer_const_literals_to_create_immutables
+                        children: [
+                          Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child:  Center(
+                                  child: Text(
+                                    "แนบสลิปชำระเงิน",
+                                    style: GoogleFonts.kanit(
+                                      fontSize: 22,
+                                    ),
+                                  )
                               )
-                          )
+                          ),
+
+                        ]
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      child: Column(
+                        children: [
+                          isLoading
+                          ? CircularProgressIndicator()
+                          : SizedBox(
+                            width: 200,
+                            height: 40,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  pickFile();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xff609966),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      "เลือกรูปภาพ",
+                                      style: GoogleFonts.kanit(
+                                        fontSize: 22,
+                                      ),
+                                    ),
+                                    Icon(Icons.done,)
+                                  ],
+                                ),
+                              ),
+                          ),
+                          if(pickedFile != null)
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Image.file(fileToDisplay!),
+                            ),
+                        ],
                       ),
-                    ]
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Column(
-                    children: [
-                      Center(
-                        child: isLoading
-                            ? CircularProgressIndicator()
-                            : ElevatedButton(
-                            onPressed: () {
-                              pickFile();
-                            },
-                            child: Text("Pick File")
-
-
-                        ),
-                      ),
-                      if(pickedFile != null)
-                        SizedBox(
-                          height: 400, width: 400,
-                          child: Image.file(fileToDisplay!),
-                        ),
-                      // Center(
-                      //   child: ElevatedButton(
-                      //       onPressed: () async{
-                      //         //await FileSelect();
-                      //         //await Upload(fileToDisplay!);
-                      //       },
-                      //       child: Text("Upload File")
-                      //   ),
-                      // ),
-
-                      Center(
+                    ),
+                    Center(
+                      child: SizedBox(
+                        width: 200,
+                        height: 40,
                         child: ElevatedButton(
-                            onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return SummaryScreen();
-                              //     },
-                              //   ),
-                              // );
-                              Get.to(() => SummaryScreen(),
-                                  arguments: {
-                                    "getTime" : Get.arguments["getTime"],
-                                    "byTime" : Get.arguments["byTime"],
-                                    "slipImage" : fileToDisplay!,
-                                    "imageName" : pickedFile!.path.toString(),
-                                    "total" : Get.arguments["total"]
-                                  }
-                              );
+                          onPressed: () {
+                            Get.to(() => SummaryScreen(),
+                                arguments: {
+                                  "getTime" : Get.arguments["getTime"],
+                                  "byTime" : Get.arguments["byTime"],
+                                  "slipImage" : fileToDisplay!,
+                                  "imageName" : pickedFile!.path.toString(),
+                                  "total" : Get.arguments["total"]
+                                }
+                            );
 
-                              print(pickedFile!.path.toString());
+                            print(pickedFile!.path.toString());
 
-                            },
-                            child: Text("ดูสรุปการสั่งซื้อ")
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xff609966),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "ดูสรุปการสั่งซื้อ",
+                                style: GoogleFonts.kanit(
+                                  fontSize: 22,
+                                ),
+                              ),
+                              Icon(Icons.done,)
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        )
+        ),
+      )
     );
   }
 }

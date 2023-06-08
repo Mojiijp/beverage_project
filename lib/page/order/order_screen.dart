@@ -163,7 +163,7 @@ class _OrderScreenState extends State<OrderScreen> {
                             height: 500,
                             child: Center(
                               child: Text(
-                                "ยังไม่มีเครื่องดื่มในตะกร้า\n กรุณาเลือกเครื่องดื่ม",
+                                "ยังไม่มีเครื่องดื่มที่สั่งซื้อ\n กรุณาสั่งซื้อเครื่องดื่มให้สำเร็จ",
                                 style: GoogleFonts.kanit(
                                     fontSize: 22
                                 ),
@@ -171,73 +171,29 @@ class _OrderScreenState extends State<OrderScreen> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 220,
-                            //margin: const EdgeInsets.only(top: 5),
-                            //padding: const EdgeInsets.all(20),
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(55),
-                                topRight: Radius.circular(55),
+                          SizedBox(
+                            width: 200,
+                            height: 40,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Get.toNamed(Routes.historyScreen);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff609966),
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                               ),
-                              color: Colors.white,
-                            ),
-                            child: Column(
-                              children: [
-                                const SizedBox(height: 30,),
-                                ///Text
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      "ราคารวม",
-                                      style: GoogleFonts.kanit(
-                                          fontSize: 26
-                                      ),
-                                    ),
-
-                                    Text(
-                                      "0 บาท",
-                                      //"${totalPrice} บาท",
-                                      style: GoogleFonts.kanit(
-                                          fontSize: 26,
-                                          color: Color(0xff1C6B00)
-                                      ),
-                                    ),
-                                  ],
-                                ),
-
-                                const SizedBox(height: 30,),
-
-                                ///submit button and select time
-                                SizedBox(
-                                  width: 200,
-                                  height: 40,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      Get.toNamed(Routes.bottomNavBar);
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0xff609966),
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          "สั่งเครื่องดื่ม",
-                                          style: GoogleFonts.kanit(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        Icon(Icons.done,)
-                                      ],
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "ดูประวัติการสั่งซื้อ",
+                                    style: GoogleFonts.kanit(
+                                      fontSize: 20,
                                     ),
                                   ),
-                                ),
-
-                                const SizedBox(height: 20,),
-                              ],
+                                  Icon(Icons.done,)
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -263,7 +219,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                           width: 390,
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(20),
-                                              color: Colors.pinkAccent
+                                              color: Color(0xff9DC08B),
                                           ),
                                           child: Column(
                                             children: [
@@ -290,7 +246,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ),
                                       ),
                                       Container(
-                                        height: 250,
+                                        height: 420,
                                         child: ListView.builder(
                                             shrinkWrap: true,
                                             itemCount: menu.menuDetail.length,

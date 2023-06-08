@@ -93,7 +93,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   List<String> sizeCup = [
     "Size M",
-    "Size L",
+    "Size L + 5",
   ];
 
   List<String> sweetNess = [
@@ -114,6 +114,7 @@ class _DetailScreenState extends State<DetailScreen> {
       toppingIntSelect = [];
       toppingSelect = [];
       countTopping = 0;
+      sweetnessInt = 0;
     });
     print(topping_list);
   }
@@ -163,15 +164,6 @@ class _DetailScreenState extends State<DetailScreen> {
                         Container(
                           width: 50,
                           height: 50,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.notifications, size: 35,),
-                          ),
                         )
                       ],
                     ),
@@ -184,18 +176,18 @@ class _DetailScreenState extends State<DetailScreen> {
                     children: <Widget>[
                       Container(
                         width: 400,
-                        height: 260,
+                        height: 240,
                         color: Colors.white,
                         child: Column(
                           children: [
-                            Text(
-                              "Id : ${Get.arguments["id"]}",
-                              style: GoogleFonts.kanit(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff1C6B00)
-                              ),
-                            ),
+                            // Text(
+                            //   "Id : ${Get.arguments["id"]}",
+                            //   style: GoogleFonts.kanit(
+                            //       fontSize: 10,
+                            //       fontWeight: FontWeight.bold,
+                            //       color: Color(0xff1C6B00)
+                            //   ),
+                            // ),
                             Image(
                               image: NetworkImage(Get.arguments["image"]),
                               width: 150,
@@ -219,22 +211,6 @@ class _DetailScreenState extends State<DetailScreen> {
                                   color: Color(0xff1C6B00)
                               ),
                             ),
-                            // Text(
-                            //   "$countSize บาท + ราคาท็อปปิ้ง $countTopping บาท * จำนวน $amountInCart แก้ว",
-                            //   style: GoogleFonts.kanit(
-                            //       fontSize: 18,
-                            //       fontWeight: FontWeight.bold,
-                            //       color: Color(0xff1C6B00)
-                            //   ),
-                            // ),
-                            // Text(
-                            //   "รวมราคาเครื่องดื่ม ${(countSize + countTopping) * amountInCart} บาท",
-                            //   style: GoogleFonts.kanit(
-                            //       fontSize: 18,
-                            //       fontWeight: FontWeight.bold,
-                            //       color: Color(0xff1C6B00)
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
@@ -308,7 +284,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           choiceChipWidgetTwo(sweetNess),
                         ],
                       ),
-                      const Divider(color: Colors.blueGrey, height: 10.0),
+                      //const Divider(color: Colors.blueGrey, height: 10.0),
           
                       // Align(
                       //   alignment: Alignment.centerLeft,
@@ -415,11 +391,12 @@ class _filterChipWidgetState extends State<filterChipWidget> {
 
         setState(() {
           toppingSelect.add(widget.chipName.split(" ")[0]);
-          if(widget.chipName == "ไม่ใส่ท็อปปิ้ง + 0"){
-            countTopping = countTopping + 0;
-            toppingIntSelect.add(0);
-            toppingInt = 0;
-          }else if(widget.chipName == "ไข่มุก + 0"){
+          // if(widget.chipName == "ไม่ใส่ท็อปปิ้ง + 0"){
+          //   countTopping = countTopping + 0;
+          //   toppingIntSelect.add(0);
+          //   toppingInt = 0;
+          // }else
+            if(widget.chipName == "ไข่มุก + 0"){
             countTopping = countTopping + 0;
             toppingIntSelect.add(1);
             toppingInt = 1;
@@ -471,11 +448,12 @@ class _filterChipWidgetState extends State<filterChipWidget> {
         }) : setState(() {
           toppingSelect.remove(widget.chipName.split(" ")[0]);
 
-          if(widget.chipName == "ไม่ใส่ท็อปปิ้ง + 0") {
-            countTopping = 0;
-            toppingIntSelect.remove(0);
-            toppingInt = 0;
-          }else if(widget.chipName == "ไข่มุก + 0"){
+          // if(widget.chipName == "ไม่ใส่ท็อปปิ้ง + 0") {
+          //   countTopping = 0;
+          //   toppingIntSelect.remove(0);
+          //   toppingInt = 0;
+          // }else
+            if(widget.chipName == "ไข่มุก + 0"){
             countTopping = 0;
             toppingIntSelect.remove(1);
             toppingInt = 1;
@@ -577,7 +555,7 @@ class _choiceChipWidgetState extends State<choiceChipWidget> {
                 print("click size M =  $countSize Bath");
                 // print(sizeCupSelect.last);
                 print(cupSize);
-              }else if(selectedChoice == "Size L") {
+              }else if(selectedChoice == "Size L + 5") {
                 cupSize = 2;
                 sizeCupSelect.add(item);
                 countSize = Get.arguments["price"]+ 5;

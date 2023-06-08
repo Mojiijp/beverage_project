@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
                               child: InfoInput(
-                                label: 'Username or E-mail',
+                                label: 'E-mail',
                                 enable: true,
                                 validator: _validateEmail,
                                 keyboardType: TextInputType.text,

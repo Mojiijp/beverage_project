@@ -129,7 +129,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     return Center(
                       child: Container(
                             width: 370,
-                            height: 150,
+                            height: 100,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20)
@@ -186,6 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+
               Center(
                 child: Container(
                   width: 370,
@@ -202,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Icons.phone
                         ),
                         Text(
-                          "012-3456789",
+                          "093 132 2003",
                           style: GoogleFonts.mulish(
                             fontSize: 18,
                           ),
@@ -212,9 +213,102 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+
+              ///Facebook
+              Center(
+                child: Container(
+                  width: 370,
+                  height: 80,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.facebook
+                        ),
+                        Text(
+                          "ถังชา : Thang Cha Little Garden",
+                          style: GoogleFonts.kanit(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+
+              // Center(
+              //   child: Container(
+              //     width: 370,
+              //     height: 80,
+              //     decoration: BoxDecoration(
+              //         color: Colors.white,
+              //         borderRadius: BorderRadius.circular(20)
+              //     ),
+              //     child: Padding(
+              //       padding: const EdgeInsets.all(5.0),
+              //       child: Row(
+              //         children: [
+              //           Icon(
+              //             Icons.phone
+              //           ),
+              //           Text(
+              //             "@661znkvt",
+              //             style: GoogleFonts.kanit(
+              //               fontSize: 18,
+              //             ),
+              //           ),
+              //         ],
+              //       )
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+
+              Center(
+                child: Container(
+                  width: 370,
+                  height: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.map_rounded
+                        ),
+                        Text(
+                          "ถนน มาลัยแมน ตำบลกำแพงแสน\n Amphoe Kamphaeng Saen,\n Thailand, Nakhon Pathom",
+                          style: GoogleFonts.kanit(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ],
+                    )
+                  ),
+                ),
+              ),
+
+
 
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
 
               Center(

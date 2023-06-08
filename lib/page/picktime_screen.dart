@@ -18,35 +18,9 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
 
   //create datetime variable
   String _getTime = "";
-  String _date = DateFormat('yyyy-MM-dd hh:mm').format(DateTime.now());
-  //TimeOfDay _timeOfDay = TimeOfDay.now();
+  //DateTime _dateNow = DateTime.now();
+  String _date = DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
   TimeOfDay _selectedTime = TimeOfDay.now();
-
-  // String temp = "";
-
-  // List<String> data_spit = _getTime.split(" ");
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // _getTime = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  //   // _timeOfDay = TimeOfDay.now();
-  // }
-  //String _gettimeOfDay = DateFormat('HH:mm:ss').format();
-  //show date picker method
-
-  // ignore: non_constant_identifier_names
-  // void _showDatePicker() {
-  //   showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(2022),
-  //     lastDate: DateTime(2025),
-  //   ).then((value) {
-  //     setState(() {
-  //       _date = value!;
-  //     });
-  //   });
-  // }
 
   @override
   void initState() {
@@ -56,8 +30,7 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
 
     setState(() {
       _getTime = dataSplit[0];
-        });
-    
+    });
   }
 
   Future<void> _selectTime(BuildContext context) async {
@@ -73,16 +46,6 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
     }
   }
 
-  // void _showTimePicker() {
-  //   showTimePicker(
-  //     context: context,
-  //     initialTime: TimeOfDay.now(),
-  //   ).then((value) {
-  //     setState(() {
-  //       _timeOfDay = value!;
-  //     });
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,64 +60,109 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
     );
 
     return Scaffold(
-      body: Center(
+      backgroundColor: const Color(0xffEDF1D6),
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-                "เวลาที่สั่งซื้อ\n $_date",
-                style: GoogleFonts.kanit(
-                  fontSize: 20,
+            ///App bar
+            Container(
+              width: 500,
+              height: 60,
+              color: const Color(0xff609966),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white,
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: const Icon(Icons.arrow_back_ios_outlined, size: 35,),
+                      ),
+                    ),
+                    Text(
+                      "เลือกเวลา",
+                      style: GoogleFonts.kanit(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white
+                      ),
+                    ),
+                    Container(
+                      width: 50,
+                      height: 50,
+                    )
+                  ],
                 ),
               ),
+            ),
 
-            SizedBox(height: 10,),
-
-            // Text(
-            //   "เวลาที่ต้องการรับ\n ${_getTime} ${_timeOfDay.format(context).toString()}",
-            //   style: GoogleFonts.kanit(
-            //     fontSize: 20,
-            //   ),
-            // ),
+            SizedBox(height: 130,),
 
             Text(
-              'เวลาที่ต้องการรับ\n $_getTime $formattedTime',
+              "เวลาที่สั่งซื้อ\n $_date น.",
               style: GoogleFonts.kanit(
-                    fontSize: 20,
+                fontSize: 28,
               ),
             ),
 
-            // Text(
-            //   _timeOfDay.format(context).toString(),
-            //   style: const TextStyle(
-            //     fontSize: 20,
-            //   ),
-            // ),
+            SizedBox(height: 20,),
 
-            MaterialButton(
-                onPressed: () => _selectTime(context),
-                color: Colors.blue,
-                child: const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "Choose Time",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                )
+            Text(
+              'เวลาที่ต้องการรับ\n $_getTime $formattedTime น.',
+              style: GoogleFonts.kanit(
+                fontSize: 28,
+              ),
             ),
+
+            SizedBox(
+              width: 200,
+              height: 40,
+              child: ElevatedButton(
+                onPressed: () => _selectTime(context),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff609966),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "เลือกเวลา",
+                      style: GoogleFonts.kanit(
+                        fontSize: 22,
+                      ),
+                    ),
+                    Icon(Icons.done,)
+                  ],
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20,),
 
             Text(
               "ราคารวม ${Get.arguments["total"]} บาท",
               style: GoogleFonts.kanit(
-                fontSize: 20,
+                fontSize: 28,
               ),
             ),
 
-            MaterialButton(
+            SizedBox(height: 10,),
+
+            SizedBox(
+              width: 200,
+              height: 40,
+              child: ElevatedButton(
                 onPressed: () {
                   Get.to(() => PayUserScreen(),
                       arguments: {
@@ -165,28 +173,27 @@ class _PickTimeScreenState extends State<PickTimeScreen> {
                       }
                   );
                 },
-                // onPressed: () {
-                //   Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => PayUserScreen()));
-                //   print(_timeOfDay.format(context).toString());
-                // },
-                color: Colors.blue,
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text(
-                    "จ่ายเงิน",
-                    style: GoogleFonts.kanit(
-                      color: Colors.white,
-                      fontSize: 20,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff609966),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "จ่ายเงิน",
+                      style: GoogleFonts.kanit(
+                        fontSize: 22,
+                      ),
                     ),
-                  ),
-                )
+                    Icon(Icons.done,)
+                  ],
+                ),
+              ),
             ),
           ],
         ),
-      ),
+      )
     );
   }
 }
